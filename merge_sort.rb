@@ -1,5 +1,5 @@
 class MergeSort
-  # @param [Object] list
+  # @param [Array] list
   def sort(list)
     if list.length <= 1
       return list
@@ -14,8 +14,8 @@ class MergeSort
 
   private
 
-  # @param [Object] left
-  # @param [Object] right
+  # @param [Array] left
+  # @param [Array] right
   def merge(left, right)
     merged_list = []
 
