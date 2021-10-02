@@ -1,3 +1,5 @@
+require_relative "./merge_sort"
+
 class Project1
   attr_accessor(:cur_class)
   CMD = %w[s u m c q]
@@ -46,10 +48,13 @@ class Project1
     end
     puts "2. Super class name: #{superclass_name}"
 
+    sorter = MergeSort.new
+
     puts "3. List of subclasses: "
     sub = get_subclasses @cur_class
     if sub.length > 0
-      sub.each_with_index { |c, i| puts "\t#{i+1}. #{c}" }
+      sorter.sort(sub)
+        .each_with_index { |c, i| puts "\t#{i+1}. #{c}" }
     else
       puts "\tNone"
     end
@@ -57,7 +62,8 @@ class Project1
     puts "4. List of instance methods: "
     methods = @cur_class.methods false
     if methods.length > 0
-      methods.each_with_index { |m, i| puts "\t#{i+1}. #{m}" }
+      sorter.sort(methods)
+        .each_with_index { |m, i| puts "\t#{i+1}. #{m}" }
     else
       puts "\tNone"
     end
@@ -65,7 +71,8 @@ class Project1
     puts "5. List of instance variables"
     variables = @cur_class.instance_variables
     if variables.length > 0
-      variables.each_with_index { |v, i| puts "\t#{i+1}. #{v}" }
+      sorter.sort(variables)
+        .each_with_index { |v, i| puts "\t#{i+1}. #{v}" }
     else
       puts "\tNone"
     end
