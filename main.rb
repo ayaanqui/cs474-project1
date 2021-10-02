@@ -21,8 +21,8 @@ class Project1
       when "m"
         command_m
       when "c"
-        puts "Get class by name"
-      when CMD[4]
+        command_c input
+      when "q"
         break
       else
         puts "Unknown command. Please try on the commands listed above."
@@ -45,7 +45,7 @@ class Project1
     puts "3. List of subclasses: "
     sub = get_subclasses @cur_class
     if sub.length > 0
-      sub.each_with_index { |c, i| puts "\t#{i+1}.) #{c}" }
+      sub.each_with_index { |c, i| puts "\t#{i+1}. #{c}" }
     else
       puts "\tNone"
     end
@@ -53,7 +53,7 @@ class Project1
     puts "4. List of instance methods: "
     methods = @cur_class.methods false
     if methods.length > 0
-      methods.each_with_index { |m, i| puts "\t#{i+1}.) #{m}" }
+      methods.each_with_index { |m, i| puts "\t#{i+1}. #{m}" }
     else
       puts "\tNone"
     end
@@ -61,7 +61,7 @@ class Project1
     puts "5. List of instance variables"
     variables = @cur_class.instance_variables
     if variables.length > 0
-      variables.each_with_index { |v, i| puts "\t#{i+1}.) #{v}" }
+      variables.each_with_index { |v, i| puts "\t#{i+1}. #{v}" }
     else
       puts "\tNone"
     end
@@ -85,6 +85,19 @@ class Project1
       pub_methods.each_with_index { |c, _| puts c }
     else
       puts "None"
+    end
+  end
+
+  def command_c(input)
+    class_name = input[2..].strip
+    all_classes = get_subclasses Object
+    my_class = all_classes.find { |c| c.name.eql? class_name }
+
+    if my_class
+      @cur_class = my_class
+      command_s
+    else
+      puts "No class with such name exists"
     end
   end
 
