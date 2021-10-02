@@ -18,12 +18,11 @@ class Project1
         command_s
       when "u"
         command_u input
-      when CMD[2]
-        puts "Print public methods of current class"
-      when CMD[3]
+      when "m"
+        command_m
+      when "c"
         puts "Get class by name"
       when CMD[4]
-        puts "Quit"
         break
       else
         puts "Unknown command. Please try on the commands listed above."
@@ -80,6 +79,15 @@ class Project1
     end
   end
 
+  def command_m
+    pub_methods = @cur_class.public_methods(false)
+    if pub_methods.length > 0
+      pub_methods.each_with_index { |c, _| puts c }
+    else
+      puts "None"
+    end
+  end
+
   def get_subclasses(my_class)
     ObjectSpace
       .each_object(Class)
@@ -104,5 +112,3 @@ end
 
 program = Project1.new
 program.program_loop
-
-[1,2].push(2)
