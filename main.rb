@@ -15,6 +15,10 @@ def instructions
   puts ""
 end
 
+def get_subclasses(my_class)
+  ObjectSpace.each_object(Class).select { |c| c < my_class }
+end
+
 def program_loop
   instructions
   cur_class = Object
@@ -25,16 +29,16 @@ def program_loop
 
     case param1
     when CMD[0]
-      subclasses = ObjectSpace.each_object(Class).select { |child| child < cur_class }
-      puts subclasses
+      sub = get_subclasses cur_class
+      sub.each_with_index { |c, i| puts "#{i+1}.) #{c}" }
     when CMD[1]
-      subclasses = ObjectSpace.each_object(Class).select { |child| child < cur_class }
+      sub = get_subclasses cur_class
 
-      nth_item =  input[2].to_i
-      if nth_item < 0 || nth_item > subclasses.length
+      nth_item =  input[2..].to_i - 1
+      if nth_item < 0 || nth_item > sub.length
         puts "Invalid index. Please try again."
       else
-        puts subclasses[nth_item]
+        puts sub[nth_item]
       end
     when CMD[2]
       puts "Print public methods of current class"
