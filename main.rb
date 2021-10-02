@@ -1,6 +1,6 @@
-CMD = ['s', 'u', 'm', 'c', 'q']
+CMD = %w[s u m c q]
 
-def create_instruction command, message
+def create_instruction(command, message)
   "\t" + command + " — " + message
 end
 
@@ -51,4 +51,4 @@ def program_loop
   end
 end
 
-program_loop()
+program_loop
