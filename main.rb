@@ -34,6 +34,9 @@ class Project1
     end
   end
 
+
+  private
+
   def command_s
     puts "1. Class name: " + @cur_class.name
 
