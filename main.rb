@@ -39,7 +39,11 @@ class Project1
     class_name = @cur_class.name ? @cur_class.name : "None"
     puts "1. Class name: #{class_name}"
 
-    superclass_name = @cur_class.superclass.name ? @cur_class.superclass : "None"
+    if class_name.eql? "Object"
+      superclass_name = "None. This is the root class"
+    else
+      superclass_name = @cur_class.superclass.name ? @cur_class.superclass : "None"
+    end
     puts "2. Super class name: #{superclass_name}"
 
     puts "3. List of subclasses: "
@@ -82,7 +86,7 @@ class Project1
   def command_m
     pub_methods = @cur_class.public_methods(false)
     if pub_methods.length > 0
-      pub_methods.each_with_index { |c, _| puts c }
+      pub_methods.each { |c| puts c }
     else
       puts "None"
     end
