@@ -3,7 +3,6 @@ class Project1
   CMD = %w[s u m c q]
 
   def initialize
-    super
     @cur_class = Object
   end
 
@@ -38,25 +37,35 @@ class Project1
   private
 
   def command_s
-    puts "1. Class name: " + @cur_class.name
+    class_name = @cur_class.name ? @cur_class.name : "None"
+    puts "1. Class name: #{class_name}"
 
-    puts "2. Super class name: " + @cur_class.class.superclass.class.name
+    superclass_name = @cur_class.superclass.name ? @cur_class.superclass : "None"
+    puts "2. Super class name: #{superclass_name}"
 
     puts "3. List of subclasses: "
     sub = get_subclasses @cur_class
-    sub.each_with_index { |c, i| puts "\t#{i+1}.) #{c}" }
+    if sub.length > 0
+      sub.each_with_index { |c, i| puts "\t#{i+1}.) #{c}" }
+    else
+      puts "\tNone"
+    end
 
     puts "4. List of instance methods: "
-    @cur_class
-      .class
-      .instance_methods
-      .each_with_index { |m, i| puts "\t#{i+1}.) #{m}" }
+    methods = @cur_class.methods false
+    if methods.length > 0
+      methods.each_with_index { |m, i| puts "\t#{i+1}.) #{m}" }
+    else
+      puts "\tNone"
+    end
 
     puts "5. List of instance variables"
-    @cur_class
-      .class
-      .instance_variables
-      .each_with_index { |v, i| puts "\t#{i+1}.) #{v}" }
+    variables = @cur_class.instance_variables
+    if variables.length > 0
+      variables.each_with_index { |v, i| puts "\t#{i+1}.) #{v}" }
+    else
+      puts "\tNone"
+    end
   end
 
   def command_u(input)
@@ -73,7 +82,7 @@ class Project1
 
   def get_subclasses(my_class)
     ObjectSpace
-      .each_object(@cur_class.class)
+      .each_object(Class)
       .select { |c| c < my_class }
   end
 
@@ -95,3 +104,5 @@ end
 
 program = Project1.new
 program.program_loop
+
+[1,2].push(2)
