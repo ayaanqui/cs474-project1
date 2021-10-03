@@ -60,7 +60,11 @@ class Project1
     end
 
     puts "4. List of instance methods: "
-    methods = @cur_class.methods false
+    methods =
+      @cur_class
+        .public_methods(false).map{ |c| "public: #{c}" }
+        .concat(@cur_class.protected_methods(false).map { |c| "protected: #{c}" })
+        .concat(@cur_class.private_methods(false).map { |c| "private: #{c}" })
     if methods.length > 0
       sorter.sort(methods)
         .each_with_index { |m, i| puts "\t#{i+1}. #{m}" }
