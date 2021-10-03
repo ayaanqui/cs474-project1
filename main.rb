@@ -61,10 +61,9 @@ class Project1
 
     puts "4. List of instance methods: "
     methods =
-      @cur_class
-        .public_methods(false).map{ |c| "public: #{c}" }
-        .concat(@cur_class.protected_methods(false).map { |c| "protected: #{c}" })
-        .concat(@cur_class.private_methods(false).map { |c| "private: #{c}" })
+      @cur_class.public_instance_methods(false).map{ |c| "#{c} <public>" }
+      .concat(@cur_class.protected_instance_methods(false).map { |c| "#{c} <protected>" })
+      .concat(@cur_class.private_instance_methods(false).map { |c| "#{c} <private>" })
     if methods.length > 0
       sorter.sort(methods)
         .each_with_index { |m, i| puts "\t#{i+1}. #{m}" }
@@ -73,7 +72,7 @@ class Project1
     end
 
     puts "5. List of instance variables"
-    variables = @cur_class.instance_variables
+    variables = @cur_class.instance_variables(false)
     if variables.length > 0
       sorter.sort(variables)
         .each_with_index { |v, i| puts "\t#{i+1}. #{v}" }
